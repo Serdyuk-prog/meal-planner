@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Plans</title>
+    </head>
+    <body>
+        <h1>Here is your plans</h1>
+        <p><a href="/plans/new">Make a new plan</a></p>
+        <ul>
+            <% for (let plan of plans) {%>
+            <li><a href="/plans/<%= plan._id %> "><%= plan.title %></a></li>
+            <% } %>
+        </ul>
+    </body>
+</html>
