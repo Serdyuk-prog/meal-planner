@@ -1,0 +1,11 @@
+<% layout('./layouts/boilerplate') %>
+<h1><%= plan.title %> <%= days[dayPlan.dayNumber] %></h1>
+<% for (let meal of dayPlan.meals) {%>
+<h2><%= meal.name %></h2>
+<ul>
+    <li>
+        <p><%= meal.dish %></p>
+        <p>Ingredients: <%= meal.ingredients %></p>
+    </li>
+</ul>
+<% } %>

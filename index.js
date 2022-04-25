@@ -21,6 +21,8 @@ mongoose
 const db = mongoose.connection;
 const app = express();
 
+const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -50,8 +52,8 @@ app.post("/plans", async (req, res) => {
 
 app.get("/plans/:id", async (req, res) => {
     const plan = await Plan.findById(req.params.id).populate("dayPlans");
-    res.render("plans/show", { plan });
-    //res.send(plan);
+    res.render("plans/show", { plan, days });
+    // res.send(plan);
 });
 
 app.get("/plans/:id/edit", async (req, res) => {
@@ -69,6 +71,13 @@ app.delete("/plans/:id", async (req, res) => {
     const { id } = req.params;
     await Plan.findByIdAndDelete(id);
     res.redirect("/plans");
+});
+
+app.get("/plans/:id/dayPlans/:dayPlanId", async (req, res) => {
+    const { id, dayPlanId } = req.params;
+    const plan = await Plan.findById(id);
+    const dayPlan = await DayPlan.findById(dayPlanId).populate("meals");
+    res.render("plans/showDay", {plan, dayPlan, days});
 });
 
 app.listen(3000, () => {

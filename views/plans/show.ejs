@@ -1,5 +1,9 @@
 <% layout('./layouts/boilerplate') %>
-<h1>Wollvome to <%= plan.title %></h1>
+<h1><%= plan.title %></h1>
+<% for (let dayPlan of plan.dayPlans) {%>
+<li><a href="/plans/<%= plan._id %>/dayPlans/<%= dayPlan._id %>"><%= days[dayPlan.dayNumber] %></a></li>
+<% } %>
+
 <div><a href="/plans/<%= plan._id %>/edit">Edit plan</a></div>
 <form action="/plans/<%= plan._id %>?_method=DELETE" method="POST">
     <button>Delete</button>
