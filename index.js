@@ -5,6 +5,8 @@ const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 
 const Plan = require("./models/plan");
+const DayPlan = require("./models/dayPlan");
+const Meal = require("./models/meal");
 const { captureRejectionSymbol } = require("events");
 
 mongoose
@@ -27,7 +29,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.get("/", (req, res) => {
-    res.render("home");
+    // res.render("home");
+    res.redirect("/plans");
 });
 
 app.get("/plans", async (req, res) => {
@@ -46,8 +49,9 @@ app.post("/plans", async (req, res) => {
 });
 
 app.get("/plans/:id", async (req, res) => {
-    const plan = await Plan.findById(req.params.id);
+    const plan = await Plan.findById(req.params.id).populate("dayPlans");
     res.render("plans/show", { plan });
+    //res.send(plan);
 });
 
 app.get("/plans/:id/edit", async (req, res) => {
@@ -61,11 +65,11 @@ app.put("/plans/:id", async (req, res) => {
     res.redirect(`/plans/${plan._id}`);
 });
 
-app.delete('/plans/:id', async (req, res) => {
+app.delete("/plans/:id", async (req, res) => {
     const { id } = req.params;
     await Plan.findByIdAndDelete(id);
-    res.redirect('/plans');
-})
+    res.redirect("/plans");
+});
 
 app.listen(3000, () => {
     console.log("Listening оn port 3000");
