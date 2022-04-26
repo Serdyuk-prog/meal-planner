@@ -93,8 +93,14 @@ app.get("/plans/:id/dayPlans/:dayPlanId", async (req, res) => {
     res.render("plans/showDay", { plan, dayPlan, days });
 });
 
-app.get("/plans/:id/dayPlans/:dayPlanId/new", (req, res) => {
-    // создание нового плана на день
+app.post("/plans/:id/dayPlans/:dayPlanId/meal", async (req, res) => {
+    const {id, dayPlanId} = req.params;
+    const dayPlan = await DayPlan.findById(dayPlanId);
+    const meal = new Meal(req.body.meal);
+    dayPlan.meals.push(meal);
+    await meal.save();
+    await dayPlan.save();
+    res.redirect(`/plans/${id}/dayPlans/${dayPlanId}`);
 });
 
 app.listen(3000, () => {
