@@ -1,12 +1,77 @@
 <% layout('./layouts/boilerplate') %>
-<h1><%= plan.title %> <u><%= days[dayPlan.dayNumber] %></u></h1>
-<% for (let meal of dayPlan.meals) {%>
-<h2><%= meal.name %></h2>
-<ul>
-    <li>
-        <p><%= meal.dish %></p>
-        <p>Ingredients: <%= meal.ingredients %></p>
-        <p>Cost: <%= meal.cost %>$</p>
-    </li>
-</ul>
-<% } %>
+<div class="row">
+    <div class="col-6">
+        <h1><%= plan.title %> <u><%= days[dayPlan.dayNumber] %></u></h1>
+        <% for (let meal of dayPlan.meals) {%>
+        <h2><%= meal.name %></h2>
+        <ul>
+            <li>
+                <p><%= meal.dish %></p>
+                <p>Ingredients: <%= meal.ingredients %></p>
+                <p>Cost: <%= meal.cost %>$</p>
+            </li>
+        </ul>
+        <% } %>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Add meal</h4>
+                <form
+                    class="mb-3 validated-form"
+                    action="/plans/<%= plan._id %>/dayPlans/<%= dayPlan._id %>/meal"
+                    method="POST"
+                >
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Meal name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="meal[name]"
+                            class="form-control mb-3"
+                            placeholder="Lunch"
+                            required
+                        />
+                        <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="dish">Dish</label>
+                        <input
+                            type="text"
+                            id="dish"
+                            name="meal[dish]"
+                            class="form-control mb-3"
+                            placeholder="Pizza"
+                            required
+                        />
+                        <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="ingredients">Ingredients</label>
+                        <textarea
+                            type="text"
+                            id="ingredients"
+                            name="meal[ingredients]"
+                            class="form-control mb-3"
+                        ></textarea>
+                        <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="cost">Cost</label>
+                        <input
+                            type="number"
+                            id="cost"
+                            name="meal[cost]"
+                            class="form-control mb-3"
+                            value="0.0"
+                            required
+                        />
+                        <div class="valid-feedback">Looks good!</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- name: String, dish: String, ingredients: String, cost: Number -->

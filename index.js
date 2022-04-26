@@ -41,11 +41,18 @@ app.get("/plans", async (req, res) => {
 });
 
 app.get("/plans/new", (req, res) => {
-    res.render("plans/new");
+    res.render("plans/newPlan", { days });
 });
 
 app.post("/plans", async (req, res) => {
     const plan = new Plan(req.body.plan);
+    for (let i = 0; i < 7; i++) {
+        const dayPlan = new DayPlan({
+            dayNumber: i,
+        });
+        plan.dayPlans.push(dayPlan);
+        await dayPlan.save();
+    }
     await plan.save();
     res.redirect(`/plans/${plan._id}`);
 });
@@ -60,7 +67,6 @@ app.get("/plans/:id", async (req, res) => {
         }
     }
     res.render("plans/show", { plan, days, totalCost: totalCost.toFixed(2) });
-    // res.send(plan);
 });
 
 app.get("/plans/:id/edit", async (req, res) => {
@@ -84,7 +90,11 @@ app.get("/plans/:id/dayPlans/:dayPlanId", async (req, res) => {
     const { id, dayPlanId } = req.params;
     const plan = await Plan.findById(id);
     const dayPlan = await DayPlan.findById(dayPlanId).populate("meals");
-    res.render("plans/showDay", {plan, dayPlan, days});
+    res.render("plans/showDay", { plan, dayPlan, days });
+});
+
+app.get("/plans/:id/dayPlans/:dayPlanId/new", (req, res) => {
+    // создание нового плана на день
 });
 
 app.listen(3000, () => {

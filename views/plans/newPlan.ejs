@@ -1,0 +1,8 @@
+<% layout('./layouts/boilerplate') %>
+<form class="col-4" action="/plans" method="POST">
+    <div class="form-group">
+        <label for="title"><h2>Title of your plan</h2></label>
+        <input type="text" id="title" name="plan[title]" class="form-control mb-3" placeholder="PlanName" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
