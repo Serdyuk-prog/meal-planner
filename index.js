@@ -52,7 +52,14 @@ app.post("/plans", async (req, res) => {
 
 app.get("/plans/:id", async (req, res) => {
     const plan = await Plan.findById(req.params.id).populate("dayPlans");
-    res.render("plans/show", { plan, days });
+    let totalCost = 0;
+    for (let element of plan.dayPlans) {
+        const dayPlan = await DayPlan.findById(element._id).populate("meals");
+        for (let meal of dayPlan.meals) {
+            totalCost += meal.cost;
+        }
+    }
+    res.render("plans/show", { plan, days, totalCost: totalCost.toFixed(2) });
     // res.send(plan);
 });
 
