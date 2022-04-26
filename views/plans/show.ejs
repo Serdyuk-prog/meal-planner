@@ -1,11 +1,18 @@
 <% layout('./layouts/boilerplate') %>
-<h1><%= plan.title %></h1>
-<% for (let dayPlan of plan.dayPlans) {%>
-<li><a href="/plans/<%= plan._id %>/dayPlans/<%= dayPlan._id %>"><%= days[dayPlan.dayNumber] %></a></li>
-<% } %>
 
-<div><a href="/plans/<%= plan._id %>/edit">Edit plan</a></div>
-<form action="/plans/<%= plan._id %>?_method=DELETE" method="POST">
-    <button>Delete</button>
-</form>
-<footer><a href="/plans">All plans</a></footer>
+<h1><%= plan.title %></h1>
+
+<div class="list-group col-3 mt-4">
+    <% for (let dayPlan of plan.dayPlans) {%>
+    <a href="/plans/<%= plan._id %>/dayPlans/<%= dayPlan._id %>" class="list-group-item list-group-item-action"
+        ><%= days[dayPlan.dayNumber] %></a
+    >
+    <% } %>
+</div>
+
+<div class="btn-group mt-3">
+    <a href="/plans/<%= plan._id %>/edit" class="btn btn-primary active me-3">Edit plan</a>
+    <form action="/plans/<%= plan._id %>?_method=DELETE" method="POST">
+        <button type="button" class="btn btn-danger">Delete plan</button>
+    </form>
+</div>

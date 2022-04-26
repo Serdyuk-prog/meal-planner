@@ -51,6 +51,7 @@ const seedDB = async () => {
                 name: mealNames[j],
                 dish: "Broccoli",
                 ingredients: "broccoli, broccoli, broccoli",
+                cost: 4.20
             });
             dayPlan.meals.push(meal);
             await meal.save();

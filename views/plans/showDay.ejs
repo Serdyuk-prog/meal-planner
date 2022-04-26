@@ -1,5 +1,5 @@
 <% layout('./layouts/boilerplate') %>
-<h1><%= plan.title %> <%= days[dayPlan.dayNumber] %></h1>
+<h1><%= plan.title %> <u><%= days[dayPlan.dayNumber] %></u></h1>
 <% for (let meal of dayPlan.meals) {%>
 <h2><%= meal.name %></h2>
 <ul>
