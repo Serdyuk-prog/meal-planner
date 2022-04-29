@@ -11,6 +11,15 @@
                 <p>Cost: <%= meal.cost %>$</p>
             </li>
         </ul>
+        <div class="btn-group mt-3">
+            <a href="/plans/<%= plan._id %>/dayPlans/<%= dayPlan._id %>/meal/<%= meal._id %>/edit" class="btn btn-primary active me-3">Edit plan</a>
+            <form
+                action="/plans/<%= plan._id %>/dayPlans/<%= dayPlan._id %>/meal/<%= meal._id %>?_method=DELETE"
+                method="POST"
+            >
+                <button class="btn btn-danger btn-sm">Delete</button>
+            </form>
+        </div>
         <% } %>
     </div>
     <div class="col-6">

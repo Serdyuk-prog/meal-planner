@@ -49,6 +49,7 @@ app.post("/plans", async (req, res) => {
     for (let i = 0; i < 7; i++) {
         const dayPlan = new DayPlan({
             dayNumber: i,
+            parentPlan: plan._id,
         });
         plan.dayPlans.push(dayPlan);
         await dayPlan.save();
@@ -81,25 +82,36 @@ app.put("/plans/:id", async (req, res) => {
 });
 
 app.delete("/plans/:id", async (req, res) => {
-    const { id } = req.params;
-    await Plan.findByIdAndDelete(id);
-    res.redirect("/plans");
+    // const { id } = req.params;
+    // await Plan.findByIdAndDelete(id);
+    // res.redirect("/plans");
+    // to do
 });
 
 app.get("/plans/:id/dayPlans/:dayPlanId", async (req, res) => {
     const { id, dayPlanId } = req.params;
     const plan = await Plan.findById(id);
     const dayPlan = await DayPlan.findById(dayPlanId).populate("meals");
+    //console.log(dayPlan.parentPlan);
     res.render("plans/showDay", { plan, dayPlan, days });
 });
 
 app.post("/plans/:id/dayPlans/:dayPlanId/meal", async (req, res) => {
-    const {id, dayPlanId} = req.params;
+    const { id, dayPlanId } = req.params;
     const dayPlan = await DayPlan.findById(dayPlanId);
     const meal = new Meal(req.body.meal);
     dayPlan.meals.push(meal);
     await meal.save();
     await dayPlan.save();
+    res.redirect(`/plans/${id}/dayPlans/${dayPlanId}`);
+});
+
+app.get("/plans/:id/dayPlans/:dayPlanId/meal/:mealId/edit", async (req, res) => {});
+
+app.delete("/plans/:id/dayPlans/:dayPlanId/meal/:mealId", async (req, res) => {
+    const { id, dayPlanId, mealId } = req.params;
+    await DayPlan.findByIdAndUpdate(dayPlanId, { $pull: { meals: mealId } });
+    await Meal.findByIdAndDelete(mealId);
     res.redirect(`/plans/${id}/dayPlans/${dayPlanId}`);
 });
 

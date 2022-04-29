@@ -45,13 +45,14 @@ const seedDB = async () => {
     for (let i = 0; i < 7; i++) {
         const dayPlan = new DayPlan({
             dayNumber: i,
+            parentPlan: plan._id,
         });
         for (let j = 0; j < 3; j++) {
             const meal = new Meal({
                 name: mealNames[j],
                 dish: "Broccoli",
                 ingredients: "broccoli, broccoli, broccoli",
-                cost: 4.20
+                cost: 4.2,
             });
             dayPlan.meals.push(meal);
             await meal.save();
