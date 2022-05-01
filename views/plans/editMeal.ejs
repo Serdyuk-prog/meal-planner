@@ -1,0 +1,51 @@
+<% layout('./layouts/boilerplate') %>
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Edit meal</h4>
+        <form
+            class="mb-3 validated-form"
+            action="/dayPlans/<%= dayPlanId %>/meal/<%= meal._id %>?_method=PUT"
+            method="POST"
+        >
+            <div class="mb-3">
+                <label class="form-label" for="name">Meal name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="meal[name]"
+                    class="form-control mb-3"
+                    placeholder="Lunch"
+                    value="<%= meal.name %>"
+                    required
+                />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="dish">Dish</label>
+                <input
+                    type="text"
+                    id="dish"
+                    name="meal[dish]"
+                    class="form-control mb-3"
+                    placeholder="Pizza"
+                    value="<%= meal.dish %>"
+                    required
+                />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="ingredients">Ingredients</label>
+                <textarea type="text" id="ingredients" name="meal[ingredients]" class="form-control mb-3">
+<%= meal.ingredients %>
+                </textarea>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="cost">Cost</label>
+                <input type="number" id="cost" name="meal[cost]" class="form-control mb-3" value="<%=meal.cost %>" required />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <button class="btn btn-success">Edit</button>
+        </form>
+    </div>
+</div>

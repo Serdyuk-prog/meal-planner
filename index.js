@@ -31,7 +31,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.get("/", (req, res) => {
-    // res.render("home");
     res.redirect("/plans");
 });
 
@@ -88,31 +87,40 @@ app.delete("/plans/:id", async (req, res) => {
     // to do
 });
 
-app.get("/plans/:id/dayPlans/:dayPlanId", async (req, res) => {
-    const { id, dayPlanId } = req.params;
-    const plan = await Plan.findById(id);
+app.get("/dayPlans/:dayPlanId", async (req, res) => {
+    const { dayPlanId } = req.params;
     const dayPlan = await DayPlan.findById(dayPlanId).populate("meals");
-    //console.log(dayPlan.parentPlan);
+    const plan = await Plan.findById(dayPlan.parentPlan);
     res.render("plans/showDay", { plan, dayPlan, days });
 });
 
-app.post("/plans/:id/dayPlans/:dayPlanId/meal", async (req, res) => {
-    const { id, dayPlanId } = req.params;
+app.post("/dayPlans/:dayPlanId/meal", async (req, res) => {
+    const { dayPlanId } = req.params;
     const dayPlan = await DayPlan.findById(dayPlanId);
     const meal = new Meal(req.body.meal);
     dayPlan.meals.push(meal);
     await meal.save();
     await dayPlan.save();
-    res.redirect(`/plans/${id}/dayPlans/${dayPlanId}`);
+    res.redirect(`/dayPlans/${dayPlanId}`);
 });
 
-app.get("/plans/:id/dayPlans/:dayPlanId/meal/:mealId/edit", async (req, res) => {});
+app.get("/dayPlans/:dayPlanId/meal/:mealId/edit", async (req, res) => {
+    const { dayPlanId, mealId } = req.params;
+    const meal = await Meal.findById(mealId);
+    res.render("plans/editMeal", { dayPlanId, meal });
+});
 
-app.delete("/plans/:id/dayPlans/:dayPlanId/meal/:mealId", async (req, res) => {
-    const { id, dayPlanId, mealId } = req.params;
+app.delete("/dayPlans/:dayPlanId/meal/:mealId", async (req, res) => {
+    const { dayPlanId, mealId } = req.params;
     await DayPlan.findByIdAndUpdate(dayPlanId, { $pull: { meals: mealId } });
     await Meal.findByIdAndDelete(mealId);
-    res.redirect(`/plans/${id}/dayPlans/${dayPlanId}`);
+    res.redirect(`/dayPlans/${dayPlanId}`);
+});
+
+app.put("/dayPlans/:dayPlanId/meal/:mealId", async (req, res) => {
+    const { dayPlanId, mealId } = req.params;
+    const meal = await Meal.findByIdAndUpdate(mealId, { ...req.body.meal });
+    res.redirect(`/dayPlans/${dayPlanId}`);
 });
 
 app.listen(3000, () => {

@@ -6,7 +6,7 @@
 
 <div class="list-group col-3 mt-4">
     <% for (let dayPlan of plan.dayPlans) {%>
-    <a href="/plans/<%= plan._id %>/dayPlans/<%= dayPlan._id %>" class="list-group-item list-group-item-action"
+    <a href="/dayPlans/<%= dayPlan._id %>" class="list-group-item list-group-item-action"
         ><%= days[dayPlan.dayNumber] %></a
     >
     <% } %>

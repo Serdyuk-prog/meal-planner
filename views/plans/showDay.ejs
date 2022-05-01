@@ -12,9 +12,9 @@
             </li>
         </ul>
         <div class="btn-group mt-3">
-            <a href="/plans/<%= plan._id %>/dayPlans/<%= dayPlan._id %>/meal/<%= meal._id %>/edit" class="btn btn-primary active me-3">Edit plan</a>
+            <a href="/dayPlans/<%= dayPlan._id %>/meal/<%= meal._id %>/edit" class="btn btn-primary active me-3">Edit</a>
             <form
-                action="/plans/<%= plan._id %>/dayPlans/<%= dayPlan._id %>/meal/<%= meal._id %>?_method=DELETE"
+                action="/dayPlans/<%= dayPlan._id %>/meal/<%= meal._id %>?_method=DELETE"
                 method="POST"
             >
                 <button class="btn btn-danger btn-sm">Delete</button>
@@ -28,7 +28,7 @@
                 <h4 class="card-title">Add meal</h4>
                 <form
                     class="mb-3 validated-form"
-                    action="/plans/<%= plan._id %>/dayPlans/<%= dayPlan._id %>/meal"
+                    action="/dayPlans/<%= dayPlan._id %>/meal"
                     method="POST"
                 >
                     <div class="mb-3">
