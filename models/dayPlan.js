@@ -17,4 +17,14 @@ const DayPlanSchema = new Schema({
     ],
 });
 
+DayPlanSchema.post("findOneAndDelete", async function (doc) {
+    if (doc) {
+        await Meal.deleteMany({
+            _id: {
+                $in: doc.meals,
+            },
+        });
+    }
+});
+
 module.exports = mongoose.model("DayPlan", DayPlanSchema);

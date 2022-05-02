@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const DayPlan = require("./dayPlan")
+const DayPlan = require("./dayPlan");
 const Schema = mongoose.Schema;
 
 const PlanSchema = new Schema({
@@ -10,6 +10,6 @@ const PlanSchema = new Schema({
             ref: "DayPlan",
         },
     ],
-})
+});
 
 module.exports = mongoose.model("Plan", PlanSchema);
