@@ -72,7 +72,6 @@ app.post(
     "/plans",
     validatePlan,
     catchAsyc(async (req, res) => {
-        console.log(JSON.stringify(req.body));
         const plan = new Plan(req.body.plan);
         for (let i = 0; i < 7; i++) {
             const dayPlan = new DayPlan({

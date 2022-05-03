@@ -1,20 +1,26 @@
 <% layout('./layouts/boilerplate') %>
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-2">
+            <h1><%= plan.title %></h1>
+        </div>
+        <div class="col-2">
+            <a href="/plans/<%= plan._id %>/edit" class="btn btn-primary btn-sm active">Edit name</a>
+        </div>
+    </div>
+    <p>Tottal costs: <%= totalCost %>$</p>
 
-<h1><%= plan.title %></h1>
+    <div class="list-group col-3 mt-4">
+        <% for (let dayPlan of plan.dayPlans) {%>
+        <a href="/dayPlans/<%= dayPlan._id %>" class="list-group-item list-group-item-action"
+            ><%= days[dayPlan.dayNumber] %></a
+        >
+        <% } %>
+    </div>
 
-<p>Tottal costs: <%= totalCost %>$ </p>
-
-<div class="list-group col-3 mt-4">
-    <% for (let dayPlan of plan.dayPlans) {%>
-    <a href="/dayPlans/<%= dayPlan._id %>" class="list-group-item list-group-item-action"
-        ><%= days[dayPlan.dayNumber] %></a
-    >
-    <% } %>
-</div>
-
-<div class="btn-group mt-3">
-    <a href="/plans/<%= plan._id %>/edit" class="btn btn-primary active me-3">Edit plan</a>
-    <form action="/plans/<%= plan._id %>?_method=DELETE" method="POST">
-        <button class="btn btn-danger">Delete plan</button>
-    </form>
+    <div class="btn-group mt-3">
+        <form action="/plans/<%= plan._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Delete plan</button>
+        </form>
+    </div>
 </div>

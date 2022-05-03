@@ -1,24 +1,29 @@
 <% layout('./layouts/boilerplate') %>
-<div class="row">
-    <div class="col-6">
+<div class="row justify-content-evenly">
+    <div class="col-5">
         <h1><%= plan.title %> <u><%= days[dayPlan.dayNumber] %></u></h1>
         <% for (let meal of dayPlan.meals) {%>
-        <h2><%= meal.name %></h2>
-        <ul>
-            <li>
-                <p><%= meal.dish %></p>
-                <p>Ingredients: <%= meal.ingredients %></p>
-                <p>Cost: <%= meal.cost %>$</p>
-            </li>
-        </ul>
-        <div class="btn-group mt-3">
-            <a href="/dayPlans/<%= dayPlan._id %>/meal/<%= meal._id %>/edit" class="btn btn-primary active me-3">Edit</a>
-            <form
-                action="/dayPlans/<%= dayPlan._id %>/meal/<%= meal._id %>?_method=DELETE"
-                method="POST"
-            >
-                <button class="btn btn-danger btn-sm">Delete</button>
-            </form>
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="card-title"><%= meal.name %></h2>
+                <ul>
+                    <li>
+                        <p><%= meal.dish %></p>
+                        <p>Ingredients: <%= meal.ingredients %></p>
+                        <p>Cost: <%= meal.cost %>$</p>
+                    </li>
+                </ul>
+                <div class="btn-group">
+                    <a
+                        href="/dayPlans/<%= dayPlan._id %>/meal/<%= meal._id %>/edit"
+                        class="btn btn-primary btn-sm active me-2"
+                        >Edit</a
+                    >
+                    <form action="/dayPlans/<%= dayPlan._id %>/meal/<%= meal._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
         </div>
         <% } %>
     </div>
@@ -26,11 +31,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Add meal</h4>
-                <form
-                    class="mb-3 validated-form"
-                    action="/dayPlans/<%= dayPlan._id %>/meal"
-                    method="POST"
-                >
+                <form class="mb-3 validated-form" action="/dayPlans/<%= dayPlan._id %>/meal" method="POST">
                     <div class="mb-3">
                         <label class="form-label" for="name">Meal name</label>
                         <input
