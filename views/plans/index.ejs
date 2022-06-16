@@ -1,6 +1,6 @@
 <% layout('./layouts/boilerplate') %>
 
-<h1>Here is your plans</h1>
+<h1>Here are your plans</h1>
 <div class="list-group col-3 mt-4">
     <% for (let plan of plans) {%>
     <a href="/plans/<%= plan._id %>" class="list-group-item list-group-item-action"><%= plan.title %></a>
